@@ -1,0 +1,13 @@
+#!/bin/sh
+export db=nutrients
+export user=root
+export password=""
+export host=localhost
+
+
+echo "Importing nutrients.mysql.sql.gz to MySQL database $db ..."
+
+echo "CREATE DATABASE $db;"     | mysql -u$user -p$password -h$host 
+gzip -dc nutrients.mysql.sql.gz | mysql -u$user -p$password -h$host $db
+
+echo "Import finished."

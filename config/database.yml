@@ -1,0 +1,15 @@
+#nutrientdb:
+#  adapter: sqlite3
+#  database: db/nutrients.sqlite3
+#  pool: 5
+#  timeout: 5000
+
+nutrientdb:
+  adapter: mysql
+  encoding: utf8
+  reconnect: false
+  database: nutrients
+  pool: 5
+  username: root
+  password:
+  socket: /tmp/mysql.sock

@@ -1,0 +1,37 @@
+Nutrients
+=========
+
+This is a Rails 3 plugin providing a database and models for querying nutrition information about food items.
+
+Database source: USDA National Nutrient Database for Standard Reference, Release 22
+http://www.ars.usda.gov/Services/docs.htm?docid=8964
+
+
+Install
+=======
+
+1. create a Rails 3 app
+2. rails plugin install git://github.com/bagilevi/nutrients.git
+
+To set up SQLite database:
+1. cd vendor/plugins/nutrients/db
+2. ./import_to_sqlite
+
+To set up MySQL database:
+1. add your db access information to the db/import_to_mysql script
+2. cd vendor/plugins/nutrients/db
+3. ./import_to_mysql
+4. set up 'nutrientdb' section of the database.yml in #{Rails.root or plugin_root}/config/database.yml
+
+
+Example
+=======
+
+Food.search('apple').first.nutrients.each do |nutrient_data| 
+  puts "#{nutrient_data.nutrient.name}: #{nutrient_data.value_per_100g} #{nutrient_data.nutrient.units}"
+end
+
+
+
+
+Copyright (c) 2010 Levente Bagi, released under the MIT license

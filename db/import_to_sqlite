@@ -1,0 +1,17 @@
+echo "Importing nutrients.mysql.sql.gz to Sqlite 3 database: nutrients.db ..."
+
+gzip -dc nutrients.mysql.sql.gz |
+grep -v ' KEY "' |
+grep -v ' UNIQUE KEY "' |
+perl -e 'local $/;$_=<>;s/,\n\)/\n\)/gs;print "begin;\n";print;print "commit;\n"' |
+perl -pe '
+if (/^(INSERT.+?)\(/) { 
+$a=$1; 
+s/\\'\''/'\'\''/g; 
+s/\\n/\n/g; 
+s/\),\(/\);\n$a\(/g; 
+} 
+' |
+ruby -e "\$stdin.each_line {|line|puts line.gsub(/\s*AUTO_INCREMENT\s*/, ' ')}" | sqlite3 nutrients.db
+
+echo "nutrients.db ready."
